@@ -80,6 +80,7 @@ namespace backend.Rules
             }
             catch (Exception e)
             {
+                Logger.CriarLog("Erro interno - desserializar DTo");
                 return new Response<string> { Success = false, ErrorMessage = "Erro interno - desserializar DTo: " + e.Message };
             }
 

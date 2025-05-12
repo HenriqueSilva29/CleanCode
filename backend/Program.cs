@@ -1,7 +1,6 @@
 using backend.Controllers;
 using backend.Data.Context;
 using backend.Data.Repositories;
-using backend.Interfaces;
 using backend.Rules;
 using backend.Services;
 
@@ -18,6 +17,11 @@ builder.Services.AddSingleton<ReceitaServices>();
 builder.Services.AddSingleton<ReceitaRepositoy>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddLogging(loggingBuilder =>
+//    {
+//        // Configurar o logger para escrever logs em um arquivo de texto
+//        loggingBuilder.AddFilter("logs/tatsu.txt");
+//    });
 
 //builder.Services.AddDbContext<UsuarioContext>(opts =>
 //{

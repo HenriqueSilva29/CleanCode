@@ -2,7 +2,7 @@
 using backend.Data.Dto;
 using backend.Interfaces;
 using backend.Models;
-using backend.Rules;
+using backend.Utils;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -30,6 +30,7 @@ namespace backend.Data.Repositories
             }
             catch (Exception ex)
             {
+                Logger.CriarLog("Falha ao inserir registro no banco: " + ex.Message);
                 return new Response<string> { Success = false, ErrorMessage = "Falha ao inserir registro no banco: " + ex.Message };
             }
         }

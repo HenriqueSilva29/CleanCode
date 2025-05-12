@@ -1,9 +1,10 @@
 ﻿using backend.Data.Dto;
-using backend.Interfaces;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+//using Newtonsoft.Json;
+using backend.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace backend.Controllers
 {
@@ -12,9 +13,11 @@ namespace backend.Controllers
     public class ReceitaController : Controller
     {
         private readonly ReceitaServices _receitaServices;
-        public ReceitaController(ReceitaServices receitaServices)
+        private readonly ILogger<ReceitaController> _logger;
+        public ReceitaController(ReceitaServices receitaServices, ILogger<ReceitaController> logger)
         {
             _receitaServices = receitaServices;
+            _logger=logger;
         }
 
         [HttpGet]
@@ -34,8 +37,30 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult> GerarReceita([FromBody] GerarReceita request)
         {
-            var response = await _receitaServices.Gerar(request);
-            return Ok(response);
+     
+
+            if (request == null)
+            {
+                //_logger.LogError("Receita enviada é nula.");
+                return BadRequest("Receita não pode ser nula.");
+            }
+
+            try
+            {
+                var response = await _receitaServices.Gerar(request);
+                return Ok(response);
+                //return CreatedAtAction(nameof(GetReceitaById), new { id = receita.Id }, receita);
+            }
+            catch (Exception ex)
+            {
+                Logger.CriarLog("Catch do gerarReceita");
+                Logger.CriarLog(ex.Message);
+                //Logger.CriarLog(ex.InnerException.ToString());
+                return BadRequest("Receita não pode ser nula.");
+            }
+
+            
+            
         }
 
         [HttpPut("{id}")]
