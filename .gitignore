@@ -1,0 +1,24 @@
+# === BACKEND (.NET) ===
+backend/bin/
+backend/obj/
+backend/.vs/
+backend/*.user
+backend/*.suo
+backend/*.dbmdl
+backend/*.db
+
+# === FRONTEND (React) ===
+frontend/node_modules/
+frontend/.env
+frontend/build/
+frontend/dist/
+frontend/npm-debug.log
+frontend/yarn-error.log
+
+# === SISTEMA/IDE ===
+.vscode/
+.idea/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
