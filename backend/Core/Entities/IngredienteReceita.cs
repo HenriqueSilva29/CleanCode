@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using backend.Utils;
 using Newtonsoft.Json;
 
-namespace backend.Models
+namespace backend.Core.Entities
 {
     public class IngredienteReceita
     {

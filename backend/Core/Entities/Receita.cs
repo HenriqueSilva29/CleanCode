@@ -1,12 +1,10 @@
-﻿using backend.Enum.Receita;
+﻿using backend.Core.Enums;
 using backend.Utils;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
-namespace backend.Models
+namespace backend.Core.Entities
 {
     public class Receita
     {

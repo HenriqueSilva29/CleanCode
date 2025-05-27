@@ -1,17 +1,14 @@
 ﻿using AutoMapper;
+using backend.Core.Entities;
+using backend.Core.Enums;
 using backend.Data.Dto;
-using backend.Data.Repositories;
-using backend.Enum.Receita;
-using backend.Interfaces;
-using backend.Models;
+using backend.Infrastructure.Data.Repositories;
 using backend.Services;
 using backend.Utils;
-using Google.Cloud.AIPlatform.V1;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using static Google.Rpc.Context.AttributeContext.Types;
 
-namespace backend.Rules
+namespace backend.Core.Rules
 {
     public class ReceitaRegras : Conversor
     {
@@ -152,14 +149,14 @@ namespace backend.Rules
             var message = string.Empty;
             var sucess = true;
 
-            if (!System.Enum.IsDefined(typeof(DificuldadeReceita), dificuldade))
+            if (!Enum.IsDefined(typeof(DificuldadeReceita), dificuldade))
             {
-                message = ("Dificuldade informada é inválida.");
+                message = "Dificuldade informada é inválida.";
                 sucess = false;
             }
             else if (!int.TryParse(porcao, out _))
             {
-                message = ("A porção deve ser um número.");
+                message = "A porção deve ser um número.";
                 sucess = false;
             }
 
@@ -167,7 +164,7 @@ namespace backend.Rules
 
                 case ValidarReceita.GerarReceita:
                     if (ingredientes == null || ingredientes.Count == 0) {
-                        message = ("Nenhum ingrediente informado");
+                        message = "Nenhum ingrediente informado";
                         sucess = false;
                     }
                     break;

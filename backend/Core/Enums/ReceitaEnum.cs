@@ -1,4 +1,4 @@
-﻿namespace backend.Enum.Receita
+﻿namespace backend.Core.Enums
 {
     public enum DificuldadeReceita
     {

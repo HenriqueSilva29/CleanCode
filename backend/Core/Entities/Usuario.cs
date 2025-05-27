@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models
+namespace backend.Core.Entities
 {
     public class Usuario
     {
@@ -13,6 +13,5 @@ namespace backend.Models
         public string Senha { get; set; }
         [Required(ErrorMessage = "Necessário informar um Email")]
         public string Email { get; set; }
-        //public virtual ICollection<Receita> Receitas { get; set; }
     }
 }

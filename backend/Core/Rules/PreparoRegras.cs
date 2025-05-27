@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using backend.Data.Repositories;
+using backend.Infrastructure.Data.Repositories;
 
-namespace backend.Rules
+namespace backend.Core.Rules
 {
     public class PreparoRegras
     {

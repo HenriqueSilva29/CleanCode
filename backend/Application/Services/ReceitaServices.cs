@@ -1,11 +1,6 @@
-﻿using backend.Data.Context;
+﻿using backend.Core.Entities;
+using backend.Core.Rules;
 using backend.Data.Dto;
-using backend.Data.Repositories;
-using backend.Interfaces;
-using backend.Models;
-using backend.Rules;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 
 namespace backend.Services
 {

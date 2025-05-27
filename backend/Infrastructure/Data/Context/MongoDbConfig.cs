@@ -1,4 +1,4 @@
-﻿namespace backend.Data.Context
+﻿namespace backend.Infrastructure.Data.Context
 {
     public class MongoDbConfig
     {

@@ -1,8 +1,5 @@
-﻿using backend.Enum.Receita;
-using backend.Models;
+﻿using backend.Core.Enums;
 using backend.Utils;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
 using Newtonsoft.Json;
 
 namespace backend.Data.Dto

@@ -1,7 +1,7 @@
 using backend.Controllers;
-using backend.Data.Context;
-using backend.Data.Repositories;
-using backend.Rules;
+using backend.Core.Rules;
+using backend.Infrastructure.Data.Context;
+using backend.Infrastructure.Data.Repositories;
 using backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);

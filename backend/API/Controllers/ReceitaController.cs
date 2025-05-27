@@ -1,10 +1,8 @@
 ﻿using backend.Data.Dto;
-using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
-//using Newtonsoft.Json;
 using backend.Utils;
-using Microsoft.Extensions.Logging;
+using backend.Core.Entities;
 
 namespace backend.Controllers
 {

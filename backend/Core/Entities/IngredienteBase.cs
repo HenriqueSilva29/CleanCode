@@ -1,4 +1,4 @@
-﻿namespace backend.Models
+﻿namespace backend.Core.Entities
 {
     public class IngredienteBase
     {

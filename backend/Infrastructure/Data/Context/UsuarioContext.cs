@@ -1,7 +1,7 @@
-﻿using backend.Models;
+﻿using backend.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Data.Context
+namespace backend.Infrastructure.Data.Context
 {
     public class UsuarioContext : DbContext
     {
