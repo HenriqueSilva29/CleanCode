@@ -1,4 +1,5 @@
-﻿using backend.Core.Entities;
+﻿using backend.Application.DTOs;
+using backend.Core.Entities;
 using backend.Core.Rules;
 using backend.Data.Dto;
 
@@ -14,7 +15,7 @@ namespace backend.Services
             _receitaRegras = receitaRegras;            
         }    
 
-        public async Task<Response<string>> Gerar(GerarReceita receita)
+        public async Task<Response<string>> Gerar(GerarReceitaDto receita)
         {
             return await _receitaRegras.GerarReceita(receita);               
         }

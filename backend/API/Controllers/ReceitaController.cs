@@ -3,6 +3,7 @@ using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using backend.Utils;
 using backend.Core.Entities;
+using backend.Application.DTOs;
 
 namespace backend.Controllers
 {
@@ -33,7 +34,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GerarReceita([FromBody] GerarReceita request)
+        public async Task<ActionResult> GerarReceita([FromBody] GerarReceitaDto request)
         {
      
 

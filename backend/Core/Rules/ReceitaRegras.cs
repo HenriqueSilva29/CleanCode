@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.Application.DTOs;
 using backend.Core.Entities;
 using backend.Core.Enums;
 using backend.Data.Dto;
@@ -13,7 +14,7 @@ namespace backend.Core.Rules
     public class ReceitaRegras : Conversor
     {
 
-        public ReceitaRegras(ReceitaRepositoy receitaRepositoy, IMapper mapper)
+        public ReceitaRegras(ReceitaRepository receitaRepositoy, IMapper mapper)
         {
             _receitaRepositoy = receitaRepositoy;
             _mapper = mapper;
@@ -49,10 +50,10 @@ namespace backend.Core.Rules
             }
         }";
 
-        private readonly ReceitaRepositoy _receitaRepositoy;
+        private readonly ReceitaRepository _receitaRepositoy;
         private readonly IMapper _mapper;
 
-        public async Task<Response<string>> GerarReceita(GerarReceita gerarReceita)
+        public async Task<Response<string>> GerarReceita(GerarReceitaDto gerarReceita)
         {
 
             var validar = ValidacaoGeral(gerarReceita.Dificuldade, gerarReceita.PorcaoPessoas, ValidarReceita.GerarReceita, gerarReceita.Ingredientes);
@@ -125,7 +126,7 @@ namespace backend.Core.Rules
             return await _receitaRepositoy.GetAsync(id);
         }
 
-        private string FormularPergunta(GerarReceita receita)
+        private string FormularPergunta(GerarReceitaDto receita)
         {
             string pergunta = @"Olá, preciso que você me indique uma receita, tendo a seguinte estrutura:" +
             "\n" + estruturaJson;

@@ -3,7 +3,7 @@
     public enum DificuldadeReceita
     {
         Fácil = 0,
-        Média = 1,
+        Médio = 1,
         Avançado = 2
     }
 

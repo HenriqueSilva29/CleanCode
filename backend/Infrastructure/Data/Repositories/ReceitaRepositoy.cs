@@ -1,37 +1,47 @@
-﻿using backend.Infrastructure.Data.Context;
+﻿using backend.Core.Entities;
 using backend.Core.Interfaces;
-using backend.Core.Entities;
+using backend.Infrastructure.Data.Context;
+using backend.Infrastructure.Data.MongoModels;
+using backend.Infrastructure.Data.Mappers;
+using backend.Utils;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using backend.Data.Dto;
-using backend.Utils;
 
 namespace backend.Infrastructure.Data.Repositories
 {
-    public class ReceitaRepositoy : IReceita
+    public class ReceitaRepository : IReceita
     {
-        private IMongoCollection<Receita> _receitaCollection;
-        public ReceitaRepositoy(IOptions<MongoDbConfig> mongoConfig)
+        private readonly IMongoCollection<ReceitaDocument> _receitaCollection;
+
+        public ReceitaRepository(IOptions<MongoDbConfig> mongoConfig)
         {
             var mongoClient = new MongoClient(mongoConfig.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(mongoConfig.Value.DatabaseName);
-            _receitaCollection = mongoDatabase.GetCollection<Receita>("Receitas");
+            _receitaCollection = mongoDatabase.GetCollection<ReceitaDocument>("Receitas");
         }
 
         public async Task<Response<string>> CreateAsync(Receita receita)
         {
             try
             {
-                // Executar a operação de inserção assíncrona
-                await _receitaCollection.InsertOneAsync(receita);
-
-                // A operação de inserção foi concluída com sucesso
-                return new Response<string> { Success = true, Text = "Receita criada com sucesso", Data = receita.Id.ToString() };
+                var receitaDoc = ReceitaMapper.ToDocument(receita);
+                await _receitaCollection.InsertOneAsync(receitaDoc);
+                return new Response<string>
+                {
+                    Success = true,
+                    Text = "Receita criada com sucesso",
+                    Data = receitaDoc.Id
+                };
             }
             catch (Exception ex)
             {
-                Logger.CriarLog("Falha ao inserir registro no banco: " + ex.Message);
-                return new Response<string> { Success = false, ErrorMessage = "Falha ao inserir registro no banco: " + ex.Message };
+                Logger.CriarLog("Falha ao inserir receita: " + ex.Message);
+                return new Response<string>
+                {
+                    Success = false,
+                    ErrorMessage = "Falha ao inserir receita: " + ex.Message
+                };
             }
         }
 
@@ -39,64 +49,107 @@ namespace backend.Infrastructure.Data.Repositories
         {
             try
             {
-                var receitas = await _receitaCollection.Find(x => true).ToListAsync();
+                var documentos = await _receitaCollection.Find(_ => true).ToListAsync();
+                var receitas = documentos.Select(ReceitaMapper.ToDomain).ToList();
 
-                return new Response<List<Receita>> { Success = true, Data = receitas};
+                return new Response<List<Receita>>
+                {
+                    Success = true,
+                    Data = receitas
+                };
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new Response<List<Receita>> { Success = false, ErrorMessage = "Erro interno: " + e.Message };
-            }             
-
+                return new Response<List<Receita>>
+                {
+                    Success = false,
+                    ErrorMessage = "Erro ao buscar receitas: " + ex.Message
+                };
+            }
         }
 
         public async Task<Response<Receita>> GetAsync(string id)
         {
             try
             {
-                var receita = await _receitaCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
-
-                return receita == null
-                ? new Response<Receita> { Success = false, ErrorMessage = "Receita não encontrada" }
-                : new Response<Receita> { Success = true, Data = receita };
-
-            }
-            catch (Exception ex)
-            {
-                return new Response<Receita> { Success = false, ErrorMessage = "Erro interno: " + ex.Message };
-            }
-        }
-
-
-        public async Task<Response<string>> UpdateAsync(string id, Receita receita) {
-            try
-            {
-                var response = await _receitaCollection.ReplaceOneAsync(x => x.Id == id, receita);
-
-                if (response.ModifiedCount == 0)
+                var doc = await _receitaCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+                if (doc == null)
                 {
-                    return new Response<string> { Success = false, ErrorMessage = "Documento não encontrado ou não modificado" };
+                    return new Response<Receita>
+                    {
+                        Success = false,
+                        ErrorMessage = "Receita não encontrada"
+                    };
                 }
 
-                return new Response<string> { Success = true, Text = "Documento atualizado com sucesso", Data = id };
+                return new Response<Receita>
+                {
+                    Success = true,
+                    Data = ReceitaMapper.ToDomain(doc)
+                };
             }
             catch (Exception ex)
             {
-                return new Response<string> { Success = false, ErrorMessage = "Erro interno: " + ex.Message };
+                return new Response<Receita>
+                {
+                    Success = false,
+                    ErrorMessage = "Erro interno: " + ex.Message
+                };
             }
         }
 
-
-        public async Task<Response<string>> RemoveAsync(string id) {
+        public async Task<Response<string>> UpdateAsync(string id, Receita receita)
+        {
             try
             {
-                var response = await _receitaCollection.DeleteOneAsync(x => x.Id == id);
+                var doc = ReceitaMapper.ToDocument(receita);
+                var result = await _receitaCollection.ReplaceOneAsync(x => x.Id == id, doc);
 
-                return new Response<string> { Success = true };
+                if (result.ModifiedCount == 0)
+                {
+                    return new Response<string>
+                    {
+                        Success = false,
+                        ErrorMessage = "Receita não encontrada ou não modificada"
+                    };
+                }
+
+                return new Response<string>
+                {
+                    Success = true,
+                    Text = "Receita atualizada com sucesso",
+                    Data = id
+                };
             }
             catch (Exception ex)
             {
-                return new Response<string> { Success = false, ErrorMessage = "Erro interno: " + ex.Message };
+                return new Response<string>
+                {
+                    Success = false,
+                    ErrorMessage = "Erro ao atualizar: " + ex.Message
+                };
+            }
+        }
+
+        public async Task<Response<string>> RemoveAsync(string id)
+        {
+            try
+            {
+                var result = await _receitaCollection.DeleteOneAsync(x => x.Id == id);
+
+                return new Response<string>
+                {
+                    Success = result.DeletedCount > 0,
+                    ErrorMessage = result.DeletedCount == 0 ? "Receita não encontrada" : null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    ErrorMessage = "Erro ao excluir: " + ex.Message
+                };
             }
         }
 

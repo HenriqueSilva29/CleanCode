@@ -1,12 +1,10 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using System.Collections.ObjectModel;
-
-namespace backend.Core.Entities
+﻿namespace backend.Core.Entities
 {
+    /// <summary>
+    /// Representa a descrição de uma etapa de preparo da receita.
+    /// </summary>
     public class Preparo
     {
-        [BsonElement("descricao")]
-        public string Descricao { get; set; }
+        public string Descricao { get; set; } = string.Empty;
     }
 }
