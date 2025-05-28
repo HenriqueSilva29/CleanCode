@@ -1,11 +1,11 @@
 # === BACKEND (.NET) ===
-backend/bin/
-backend/obj/
-backend/.vs/
-backend/*.user
-backend/*.suo
-backend/*.dbmdl
-backend/*.db
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+**/*.suo
+**/*.dbmdl
+**/*.db
 
 # === FRONTEND (React) ===
 frontend/node_modules/
@@ -22,3 +22,6 @@ frontend/yarn-error.log
 *.tmp
 .DS_Store
 Thumbs.db
+
+# === OUTROS ===
+.fake

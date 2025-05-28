@@ -1,7 +1,8 @@
-﻿using backend.Data.Dto;
-using backend.Models;
+﻿using backend.Application.DTOs;
+using backend.Core.Entities;
+using backend.Data.Dto;
 
-namespace backend.Interfaces
+namespace backend.Core.Interfaces
 {
     public interface IReceita
     {

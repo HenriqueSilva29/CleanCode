@@ -1,9 +1,11 @@
-﻿namespace backend.Models
+﻿namespace backend.Core.Entities
 {
+    /// <summary>
+    /// Representa um ingrediente genérico que pode ser utilizado em várias receitas.
+    /// </summary>
     public class IngredienteBase
     {
-        string Id { get; set; }
-        public string Nome { get; set; }
-        //public virtual Usuario Usuario { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string Nome { get; set; } = string.Empty;
     }
 }

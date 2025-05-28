@@ -1,18 +1,19 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using Newtonsoft.Json;
 using backend.Utils;
-using Newtonsoft.Json;
 
-namespace backend.Models
+namespace backend.Core.Entities
 {
+    /// <summary>
+    /// Representa o conjunto de ingredientes utilizados em uma receita, organizados por etapas ou categorias.
+    /// </summary>
     public class IngredienteReceita
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
-        [BsonElement("ingredientes")]
+        /// <summary>
+        /// Ingredientes agrupados por etapa, em formato chave:valor.
+        /// </summary>
         [JsonConverter(typeof(Conversor))]
-        public Dictionary<string, Dictionary<string, string>> Ingredientes { get; set; }
+        public Dictionary<string, Dictionary<string, string>> Ingredientes { get; set; } = new();
     }
 }

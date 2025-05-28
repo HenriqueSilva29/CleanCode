@@ -1,22 +1,20 @@
 ﻿using AutoMapper;
+using backend.Application.DTOs;
+using backend.Core.Entities;
+using backend.Core.Enums;
 using backend.Data.Dto;
-using backend.Data.Repositories;
-using backend.Enum.Receita;
-using backend.Interfaces;
-using backend.Models;
+using backend.Infrastructure.Data.Repositories;
 using backend.Services;
 using backend.Utils;
-using Google.Cloud.AIPlatform.V1;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using static Google.Rpc.Context.AttributeContext.Types;
 
-namespace backend.Rules
+namespace backend.Core.Rules
 {
-    public class ReceitaRegras : Conversor
+    public class ReceitaRegras : Conversor, IReceitaRegras
     {
 
-        public ReceitaRegras(ReceitaRepositoy receitaRepositoy, IMapper mapper)
+        public ReceitaRegras(ReceitaRepository receitaRepositoy, IMapper mapper)
         {
             _receitaRepositoy = receitaRepositoy;
             _mapper = mapper;
@@ -52,10 +50,10 @@ namespace backend.Rules
             }
         }";
 
-        private readonly ReceitaRepositoy _receitaRepositoy;
+        private readonly ReceitaRepository _receitaRepositoy;
         private readonly IMapper _mapper;
 
-        public async Task<Response<string>> GerarReceita(GerarReceita gerarReceita)
+        public async Task<Response<string>> GerarReceita(GerarReceitaDto gerarReceita)
         {
 
             var validar = ValidacaoGeral(gerarReceita.Dificuldade, gerarReceita.PorcaoPessoas, ValidarReceita.GerarReceita, gerarReceita.Ingredientes);
@@ -88,12 +86,12 @@ namespace backend.Rules
             var receita = _mapper.Map<Receita>(receitaDto);
 
             //Criando receita.
-            return await _receitaRepositoy.CreateAsync(receita);
+            return await _receitaRepositoy.AddAsync(receita);
         }
 
         public async Task<Response<List<Receita>>> TodasReceitas()
         {
-            return await _receitaRepositoy.GetAsync();
+            return await _receitaRepositoy.GetAllAsync();
         }
 
         public async Task<Response<string>> AtualizarReceita(string id, ReceitaDto receitaDto) {
@@ -120,7 +118,7 @@ namespace backend.Rules
 
         public async Task<Response<string>> RemoveAsync(string id)
         {
-            return await _receitaRepositoy.RemoveAsync(id);
+            return await _receitaRepositoy.DeleteAsync(id);
         }
 
         public async Task<Response<Receita>> Receita(string id)
@@ -128,7 +126,7 @@ namespace backend.Rules
             return await _receitaRepositoy.GetAsync(id);
         }
 
-        private string FormularPergunta(GerarReceita receita)
+        private string FormularPergunta(GerarReceitaDto receita)
         {
             string pergunta = @"Olá, preciso que você me indique uma receita, tendo a seguinte estrutura:" +
             "\n" + estruturaJson;
@@ -152,14 +150,14 @@ namespace backend.Rules
             var message = string.Empty;
             var sucess = true;
 
-            if (!System.Enum.IsDefined(typeof(DificuldadeReceita), dificuldade))
+            if (!Enum.IsDefined(typeof(DificuldadeReceita), dificuldade))
             {
-                message = ("Dificuldade informada é inválida.");
+                message = "Dificuldade informada é inválida.";
                 sucess = false;
             }
             else if (!int.TryParse(porcao, out _))
             {
-                message = ("A porção deve ser um número.");
+                message = "A porção deve ser um número.";
                 sucess = false;
             }
 
@@ -167,7 +165,7 @@ namespace backend.Rules
 
                 case ValidarReceita.GerarReceita:
                     if (ingredientes == null || ingredientes.Count == 0) {
-                        message = ("Nenhum ingrediente informado");
+                        message = "Nenhum ingrediente informado";
                         sucess = false;
                     }
                     break;

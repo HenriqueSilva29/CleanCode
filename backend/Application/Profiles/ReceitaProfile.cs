@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using backend.Infrastructure.Data;
+using backend.Core.Entities;
 using backend.Data.Dto;
-using backend.Models;
 
 namespace backend.Profiles
 {

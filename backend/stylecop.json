@@ -1,0 +1,9 @@
+{
+  "settings": {
+    "documentationRules": {
+      "companyName": "CleanCode",
+      "documentExposedElements": true,
+      "documentInternalElements": true
+    }
+  }
+}

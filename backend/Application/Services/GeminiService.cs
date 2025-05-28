@@ -1,4 +1,5 @@
-﻿using backend.Data.Dto;
+﻿using backend.Application.DTOs;
+using backend.Data.Dto;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Http;
 using Newtonsoft.Json;

@@ -1,10 +1,8 @@
 ﻿using backend.Data.Dto;
-using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
-//using Newtonsoft.Json;
 using backend.Utils;
-using Microsoft.Extensions.Logging;
+using backend.Application.DTOs;
 
 namespace backend.Controllers
 {
@@ -23,7 +21,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult> Receitas()
         {
-            var response = await _receitaServices.Receitas();
+            var response = await _receitaServices.TodasReceitas();
             return Ok(response);
         }
 
@@ -35,7 +33,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GerarReceita([FromBody] GerarReceita request)
+        public async Task<ActionResult> GerarReceita([FromBody] GerarReceitaDto request)
         {
      
 
@@ -47,7 +45,7 @@ namespace backend.Controllers
 
             try
             {
-                var response = await _receitaServices.Gerar(request);
+                var response = await _receitaServices.GerarReceita(request);
                 return Ok(response);
                 //return CreatedAtAction(nameof(GetReceitaById), new { id = receita.Id }, receita);
             }
@@ -73,7 +71,7 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletarReceita(string id)
         {
-            var response = await _receitaServices.RemoverReceita(id);
+            var response = await _receitaServices.RemoveAsync(id);
             return Ok(response);
         }
     }

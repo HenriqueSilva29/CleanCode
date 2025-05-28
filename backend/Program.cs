@@ -1,7 +1,7 @@
 using backend.Controllers;
-using backend.Data.Context;
-using backend.Data.Repositories;
-using backend.Rules;
+using backend.Core.Rules;
+using backend.Infrastructure.Data.Context;
+using backend.Infrastructure.Data.Repositories;
 using backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +14,7 @@ builder.Services.Configure<MongoDbConfig>(builder.Configuration.GetSection("Mong
 builder.Services.AddSingleton<ReceitaRegras>();
 builder.Services.AddSingleton<ReceitaController>();
 builder.Services.AddSingleton<ReceitaServices>();
-builder.Services.AddSingleton<ReceitaRepositoy>();
+builder.Services.AddSingleton<ReceitaRepository>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddLogging(loggingBuilder =>

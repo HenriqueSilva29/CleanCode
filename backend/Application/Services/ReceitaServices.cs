@@ -1,30 +1,26 @@
-﻿using backend.Data.Context;
+﻿using backend.Application.DTOs;
+using backend.Core.Entities;
+using backend.Core.Rules;
 using backend.Data.Dto;
-using backend.Data.Repositories;
-using backend.Interfaces;
-using backend.Models;
-using backend.Rules;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 
 namespace backend.Services
 {
-    public class ReceitaServices
+    public class ReceitaServices : IReceitaRegras
     {
 
-        private ReceitaRegras _receitaRegras;
+        private readonly IReceitaRegras _receitaRegras;
 
-        public ReceitaServices(ReceitaRegras receitaRegras)
-        { 
-            _receitaRegras = receitaRegras;            
-        }    
+        public ReceitaServices(IReceitaRegras receitaRegras)
+        {
+            _receitaRegras = receitaRegras;
+        }  
 
-        public async Task<Response<string>> Gerar(GerarReceita receita)
+        public async Task<Response<string>> GerarReceita(GerarReceitaDto receita)
         {
             return await _receitaRegras.GerarReceita(receita);               
         }
 
-        public async Task<Response<List<Receita>>> Receitas()
+        public async Task<Response<List<Receita>>> TodasReceitas()
         {
             return await _receitaRegras.TodasReceitas();
         }
@@ -34,7 +30,7 @@ namespace backend.Services
             return await _receitaRegras.AtualizarReceita(id, receita);
         }
 
-        public async Task<Response<string>> RemoverReceita(string id)
+        public async Task<Response<string>> RemoveAsync(string id)
         {
             return await _receitaRegras.RemoveAsync(id);
         }

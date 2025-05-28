@@ -1,9 +1,9 @@
-﻿using backend.Data.Context;
-using backend.Models;
+﻿using backend.Infrastructure.Data.Context;
+using backend.Core.Entities;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace backend.Data.Repositories
+namespace backend.Infrastructure.Data.Repositories
 {
     public class PreparoRepository
     {
