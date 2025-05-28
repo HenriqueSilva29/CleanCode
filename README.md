@@ -1,4 +1,4 @@
-# 🧼 CleanCode Project
+![image](https://github.com/user-attachments/assets/88b9530b-924e-4727-bc45-9b3556e14534)# 🧼 CleanCode Project
 
 Este projeto tem como objetivo a aplicação prática dos princípios de **Clean Code**, utilizando a linguagem **C# (.NET 7)** no backend e **React (TypeScript)** no frontend.
 
@@ -15,16 +15,5 @@ A iniciativa visa demonstrar, por meio de um sistema funcional, a importância d
 
 ## 📂 Estrutura do projeto
 
-CleanCode/
-│
-├── backend/ # Projeto .NET (API + serviços)
-│ ├── Core/ # Entidades de domínio e regras de negócio
-│ ├── Application/ # Serviços e DTOs
-│ ├── Infrastructure/ # Modelos de dados e integração com banco
-│ ├── API/ # Controllers e configurações da API
-│
-├── backend.Tests/ # Projeto de testes unitários (xUnit)
-│
-├── frontend/ # Projeto React + TypeScript
-│
-└── README.md # Documentação do projeto
+![estrutura](https://github.com/user-attachments/assets/9c821707-1fac-45e9-9e70-3a1d88aadddd)
+
