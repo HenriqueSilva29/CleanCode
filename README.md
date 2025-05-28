@@ -15,3 +15,16 @@ A iniciativa visa demonstrar, por meio de um sistema funcional, a importância d
 
 ## 📂 Estrutura do projeto
 
+CleanCode/
+│
+├── backend/ # Projeto .NET (API + serviços)
+│ ├── Core/ # Entidades de domínio e regras de negócio
+│ ├── Application/ # Serviços e DTOs
+│ ├── Infrastructure/ # Modelos de dados e integração com banco
+│ ├── API/ # Controllers e configurações da API
+│
+├── backend.Tests/ # Projeto de testes unitários (xUnit)
+│
+├── frontend/ # Projeto React + TypeScript
+│
+└── README.md # Documentação do projeto
