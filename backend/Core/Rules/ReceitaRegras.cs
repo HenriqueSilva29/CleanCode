@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace backend.Core.Rules
 {
-    public class ReceitaRegras : Conversor
+    public class ReceitaRegras : Conversor, IReceitaRegras
     {
 
         public ReceitaRegras(ReceitaRepository receitaRepositoy, IMapper mapper)
@@ -86,12 +86,12 @@ namespace backend.Core.Rules
             var receita = _mapper.Map<Receita>(receitaDto);
 
             //Criando receita.
-            return await _receitaRepositoy.CreateAsync(receita);
+            return await _receitaRepositoy.AddAsync(receita);
         }
 
         public async Task<Response<List<Receita>>> TodasReceitas()
         {
-            return await _receitaRepositoy.GetAsync();
+            return await _receitaRepositoy.GetAllAsync();
         }
 
         public async Task<Response<string>> AtualizarReceita(string id, ReceitaDto receitaDto) {
@@ -118,7 +118,7 @@ namespace backend.Core.Rules
 
         public async Task<Response<string>> RemoveAsync(string id)
         {
-            return await _receitaRepositoy.RemoveAsync(id);
+            return await _receitaRepositoy.DeleteAsync(id);
         }
 
         public async Task<Response<Receita>> Receita(string id)

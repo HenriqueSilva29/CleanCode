@@ -2,7 +2,6 @@
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using backend.Utils;
-using backend.Core.Entities;
 using backend.Application.DTOs;
 
 namespace backend.Controllers
@@ -22,7 +21,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult> Receitas()
         {
-            var response = await _receitaServices.Receitas();
+            var response = await _receitaServices.TodasReceitas();
             return Ok(response);
         }
 
@@ -46,7 +45,7 @@ namespace backend.Controllers
 
             try
             {
-                var response = await _receitaServices.Gerar(request);
+                var response = await _receitaServices.GerarReceita(request);
                 return Ok(response);
                 //return CreatedAtAction(nameof(GetReceitaById), new { id = receita.Id }, receita);
             }
@@ -72,7 +71,7 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletarReceita(string id)
         {
-            var response = await _receitaServices.RemoverReceita(id);
+            var response = await _receitaServices.RemoveAsync(id);
             return Ok(response);
         }
     }

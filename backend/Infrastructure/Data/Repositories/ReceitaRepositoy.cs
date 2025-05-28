@@ -7,10 +7,11 @@ using backend.Utils;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using backend.Data.Dto;
+using backend.Application.DTOs;
 
 namespace backend.Infrastructure.Data.Repositories
 {
-    public class ReceitaRepository : IReceita
+    public class ReceitaRepository : IReceitaRepository
     {
         private readonly IMongoCollection<ReceitaDocument> _receitaCollection;
 
@@ -21,7 +22,7 @@ namespace backend.Infrastructure.Data.Repositories
             _receitaCollection = mongoDatabase.GetCollection<ReceitaDocument>("Receitas");
         }
 
-        public async Task<Response<string>> CreateAsync(Receita receita)
+        public async Task<Response<string>> AddAsync(Receita receita)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace backend.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<Response<List<Receita>>> GetAsync()
+        public async Task<Response<List<Receita>>> GetAllAsync()
         {
             try
             {
@@ -131,7 +132,7 @@ namespace backend.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<Response<string>> RemoveAsync(string id)
+        public async Task<Response<string>> DeleteAsync(string id)
         {
             try
             {
@@ -151,31 +152,6 @@ namespace backend.Infrastructure.Data.Repositories
                     ErrorMessage = "Erro ao excluir: " + ex.Message
                 };
             }
-        }
-
-        Task<Response<List<Receita>>> IReceita.GetAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Response<Receita>> IReceita.GetAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Response<string>> IReceita.CreateAsync(Receita receita)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Response<string>> IReceita.UpdateAsync(string id, Receita receita)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Response<string>> IReceita.RemoveAsync(string id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

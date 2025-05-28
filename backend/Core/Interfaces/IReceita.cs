@@ -1,4 +1,5 @@
-﻿using backend.Core.Entities;
+﻿using backend.Application.DTOs;
+using backend.Core.Entities;
 using backend.Data.Dto;
 
 namespace backend.Core.Interfaces

@@ -5,22 +5,22 @@ using backend.Data.Dto;
 
 namespace backend.Services
 {
-    public class ReceitaServices
+    public class ReceitaServices : IReceitaRegras
     {
 
-        private ReceitaRegras _receitaRegras;
+        private readonly IReceitaRegras _receitaRegras;
 
-        public ReceitaServices(ReceitaRegras receitaRegras)
-        { 
-            _receitaRegras = receitaRegras;            
-        }    
+        public ReceitaServices(IReceitaRegras receitaRegras)
+        {
+            _receitaRegras = receitaRegras;
+        }  
 
-        public async Task<Response<string>> Gerar(GerarReceitaDto receita)
+        public async Task<Response<string>> GerarReceita(GerarReceitaDto receita)
         {
             return await _receitaRegras.GerarReceita(receita);               
         }
 
-        public async Task<Response<List<Receita>>> Receitas()
+        public async Task<Response<List<Receita>>> TodasReceitas()
         {
             return await _receitaRegras.TodasReceitas();
         }
@@ -30,7 +30,7 @@ namespace backend.Services
             return await _receitaRegras.AtualizarReceita(id, receita);
         }
 
-        public async Task<Response<string>> RemoverReceita(string id)
+        public async Task<Response<string>> RemoveAsync(string id)
         {
             return await _receitaRegras.RemoveAsync(id);
         }
